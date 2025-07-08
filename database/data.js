@@ -12,9 +12,21 @@ async function getData() {
         if (error.code == 'ENOENT') {
             await fs.writeFile(dataPath, '{"days":{}}');
             getData();
+        } else {
+            console.log(error);
+            process.abort();
         }
-        console.log('catch you', error.code);
     }
 }
 
-getData();
+async function setData(dataObj) {
+    try {
+        const json = JSON.stringify(dataObj);
+        await fs.writeFile(dataPath, json);
+    } catch (error) {
+        console.log(error);
+        process.abort();
+    }
+}
+
+module.exports = { getData, setData };
