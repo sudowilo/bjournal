@@ -4,6 +4,7 @@ const program = new Command();
 
 const {toIsoLocalDate} = require('../lib/getDate');
 const {listTodos, listRecentDaysTodos} = require('../commands/list');
+const {insertTodo} = require('../commands/insert');
 
 program
     .name('bjournal')
@@ -24,6 +25,18 @@ program
         } else {
             listTodos(isoDate);
         }
+    })
+
+program
+    .command('insert')
+    .alias('i')
+    .arguments('<string...>')
+    .description('inserting todo to specific date')
+    .option('-d, --date <string>', 'todos of specific day', new Date())
+    .action((str, option)=>{
+        const date = new Date(option.date);
+        const isoDate = toIsoLocalDate(date);
+        insertTodo(str, isoDate);
     })
 
 program.parse();
