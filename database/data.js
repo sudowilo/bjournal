@@ -14,7 +14,7 @@ async function getData() {
             getData();
         } else {
             console.log(error);
-            process.abort();
+            process.exit(0);
         }
     }
 }
@@ -25,7 +25,7 @@ async function setData(dataObj) {
         await fs.writeFile(dataPath, json);
     } catch (error) {
         console.log(error);
-        process.abort();
+        process.exit(0);
     }
 }
 

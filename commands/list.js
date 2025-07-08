@@ -19,6 +19,7 @@ async function listTodos(date) {
         displayTodos(day);
     } catch (error) {
         console.log(error);
+        process.exit(0);
     }
 }
 
@@ -32,10 +33,10 @@ async function listRecentDaysTodos(date, days) {
             const isoDate = toIsoLocalDate(selectedDate);
             const day = data.days[isoDate];
             displayTodos(day);
-            // console.log('');
         }
     } catch (error) {
         console.log(error);
+        process.exit(0);
     }
 }
 

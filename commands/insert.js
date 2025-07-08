@@ -15,7 +15,7 @@ async function insertTodo(todos, date) {
         console.log('todos inserted!');
     } catch (error) {
         console.log(error);
-        process.abort();
+        process.exit(0);
     }
 }
 
