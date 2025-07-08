@@ -1,6 +1,9 @@
 #! /usr/bin/env node
-const {Command} = require('commander');
+const { Command } = require('commander');
 const program = new Command();
+
+const {toIsoLocalDate} = require('../lib/getDate');
+const {listTodos, listRecentDaysTodos} = require('../commands/list');
 
 program
     .name('bjournal')
@@ -10,12 +13,17 @@ program
 program
     .command('list')
     .alias('l')
-    .argument('<string>', 'lets see what you got')
     .description('lists todos (and goals)')
-    .option('-d --date', 'todos of specific day')
-    .action((str, option)=>{
-        console.log(str);
-        console.log(option);
+    .option('-d, --date <string>', 'todos of specific day', new Date())
+    .option('-7, --recent7', 'show recent 7 days todos')
+    .action((option) => {
+        const date = new Date(option.date);
+        const isoDate = toIsoLocalDate(date);
+        if (option.recent7){
+            listRecentDaysTodos(isoDate, 7);
+        } else {
+            listTodos(isoDate);
+        }
     })
 
 program.parse();
