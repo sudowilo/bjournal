@@ -1,0 +1,17 @@
+{
+  "name": "bjournal",
+  "version": "0.0.0",
+  "description": "cli todo and goal pointer",
+  "main": "bin/bjournal.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "bjournal": "./bin/bjournal.js"
+  },
+  "author": "wilo",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^14.0.0"
+  }
+}
