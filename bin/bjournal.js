@@ -2,9 +2,10 @@
 const { Command } = require('commander');
 const program = new Command();
 
-const {toIsoLocalDate} = require('../lib/getDate');
+const {toIsoLocalDate, isoLocalDate} = require('../lib/getDate');
 const {listTodos, listRecentDaysTodos} = require('../commands/list');
 const {insertTodo} = require('../commands/insert');
+const {removeTodo} = require('../commands/remove');
 
 program
     .name('bjournal')
@@ -37,6 +38,19 @@ program
         const date = new Date(option.date);
         const isoDate = toIsoLocalDate(date);
         insertTodo(str, isoDate);
+    })
+
+
+program
+    .command('remove')
+    .alias('rm')
+    .arguments('<index...>')
+    .description('removing given index from data list')
+    .option('-d, --date <string>', 'todos of specific day', new Date())
+    .action((indexes, option)=>{
+        const date = new Date(option.date);
+        const isoDate = toIsoLocalDate(date);
+        removeTodo(indexes, isoDate);
     })
 
 program.parse();
