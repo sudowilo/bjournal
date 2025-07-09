@@ -5,9 +5,9 @@ function displayTodos(day) {
     if (!day) {
         console.log('nothing todo!');
     } else {
-        for (const todo of day.todo) {
+        for (const [index, todo] of day.todo.entries()) {
             const mark = todo.isDone ? '🗙' : '●';
-            console.log(mark, todo.text);
+            console.log(index, mark, todo.text);
         }
     }
 }
