@@ -46,7 +46,7 @@ program
     .command('remove')
     .alias('rm')
     .arguments('<index...>')
-    .description('removing given index from data list')
+    .description('removing given index from todo list')
     .option('-d, --date <string>', 'todos of specific day', new Date())
     .action((indexes, option)=>{
         const date = new Date(option.date);
