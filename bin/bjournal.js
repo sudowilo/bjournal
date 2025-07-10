@@ -6,7 +6,7 @@ const {toIsoLocalDate, isoLocalDate} = require('../lib/getDate');
 const {listTodos, listRecentDaysTodos} = require('../commands/list');
 const {insertTodo} = require('../commands/insert');
 const {removeTodo} = require('../commands/remove');
-const {markDone} = require('../commands/mark');
+const {markDone, markUndone} = require('../commands/mark');
 
 program
     .name('bjournal')
@@ -66,4 +66,15 @@ program
         markDone(indexes, isoDate);
     })
 
+program
+    .command('undone')
+    .alias('u')
+    .arguments('<index...>')
+    .description('marks given indexes undone')
+    .option('-d, --date <string>', 'todos of specific day', new Date())
+    .action((indexes, option)=>{
+        const date = new Date(option.date);
+        const isoDate = toIsoLocalDate(date);
+        markUndone(indexes, isoDate);
+    })
 program.parse();
