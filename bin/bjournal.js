@@ -2,7 +2,7 @@
 const { Command } = require('commander');
 const program = new Command();
 
-const { toIsoLocalDate, isoLocalDate } = require('../lib/getDate');
+const { toIsoLocalDate, isoLocalDate, getTomorrow } = require('../lib/getDate');
 const { listTodos, listRecentDaysTodos } = require('../commands/list');
 const { insertTodo } = require('../commands/insert');
 const { removeTodo } = require('../commands/remove');
@@ -20,8 +20,10 @@ program
     .arguments('<string...>')
     .description('inserting todo to specific date')
     .option('-d, --date <string>', 'todos of specific day', new Date())
+    .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
     .action((str, option) => {
-        const isoDate = toIsoLocalDate(option.date);
+        const { date, tomorrow } = option;
+        const isoDate = toIsoLocalDate(tomorrow ? tomorrow : date);
         insertTodo(str, isoDate);
     })
 
@@ -30,10 +32,12 @@ program
     .alias('l')
     .description('lists todos (and goals)')
     .option('-d, --date <string>', 'todos of specific day', new Date())
+    .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
     .option('-7, --recent7', 'show recent 7 days todos')
     .action((option) => {
-        const isoDate = toIsoLocalDate(option.date);
-        if (option.recent7) {
+        const { date, tomorrow } = option;
+        const isoDate = toIsoLocalDate(tomorrow ? tomorrow : date);
+        if (option.recent7 && tomorrow) {
             listRecentDaysTodos(isoDate, 7);
         } else {
             listTodos(isoDate);
@@ -46,8 +50,10 @@ program
     .arguments('<index...>')
     .description('removing given index from todo list')
     .option('-d, --date <string>', 'todos of specific day', new Date())
+    .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
     .action((indexes, option) => {
-        const isoDate = toIsoLocalDate(option.date);
+        const { date, tomorrow } = option;
+        const isoDate = toIsoLocalDate(tomorrow ? tomorrow : date);
         removeTodo(indexes, isoDate);
     })
 
@@ -57,8 +63,10 @@ program
     .arguments('<index...>')
     .description('marks given indexes done')
     .option('-d, --date <string>', 'todos of specific day', new Date())
+    .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
     .action((indexes, option) => {
-        const isoDate = toIsoLocalDate(option.date);
+        const { date, tomorrow } = option;
+        const isoDate = toIsoLocalDate(tomorrow ? tomorrow : date);
         markDone(indexes, isoDate);
     })
 
@@ -68,8 +76,10 @@ program
     .arguments('<index...>')
     .description('marks given indexes undone')
     .option('-d, --date <string>', 'todos of specific day', new Date())
+    .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
     .action((indexes, option) => {
-        const isoDate = toIsoLocalDate(option.date);
+        const { date, tomorrow } = option;
+        const isoDate = toIsoLocalDate(tomorrow ? tomorrow : date);
         markUndone(indexes, isoDate);
     })
 
@@ -79,8 +89,10 @@ program
     .arguments('<index...>')
     .description('mark given indexes as import and bold you can make it bold several times for more import todos')
     .option('-d, --date <string>', 'todos of specific day', new Date())
+    .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
     .action((indexes, option) => {
-        const isoDate = toIsoLocalDate(option.date);
+        const { date, tomorrow } = option;
+        const isoDate = toIsoLocalDate(tomorrow ? tomorrow : date);
         markBold(indexes, isoDate);
     })
 
@@ -91,18 +103,14 @@ program
     .arguments('<index...>')
     .description('forwards todo to specific date')
     .option('-d, --date <string>', 'todos of specific day', new Date())
-    .option('-f, --forward-date <string>', 'date of day to forward  (default: tomorrow)')
+    .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
+    .option('-f, --forward-date <string>', 'date of day to forward  (default: tomorrow)', getTomorrow())
     .action((indexes, option) => {
-        const isoDate = toIsoLocalDate(option.date);
-        if (!option.forwardDate) {
-            const date = new Date();
-            date.setDate(date.getDate() + 1);
-            const isoForwardDate = toIsoLocalDate(date);
-            forwardTodo(indexes, isoDate, isoForwardDate);
-        } else {
-            const isoForwardDate = toIsoLocalDate(option.forwardDate);
-            forwardTodo(indexes, isoDate, isoForwardDate);
-        }
+        const { date, tomorrow } = option;
+        const isoDate = toIsoLocalDate(tomorrow ? tomorrow : date);
+        const isoForwardDate = toIsoLocalDate(option.forwardDate);
+        forwardTodo(indexes, isoDate, isoForwardDate);
+
     })
 
 program.parse();

@@ -11,7 +11,7 @@ async function insertTodo(todos, date) {
         for (let todo of todos) {
             todo = todo.trim();
             if (todo[0] === '^') {
-                todo = todo.slice(1);
+                todo = todo.slice(2);
             }
             currentDay.todo.push({ text: todo, isDone: false });
         }
