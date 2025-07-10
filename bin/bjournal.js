@@ -20,8 +20,7 @@ program
     .description('inserting todo to specific date')
     .option('-d, --date <string>', 'todos of specific day', new Date())
     .action((str, option) => {
-        const date = new Date(option.date);
-        const isoDate = toIsoLocalDate(date);
+        const isoDate = toIsoLocalDate(option.date);
         insertTodo(str, isoDate);
     })
 
@@ -32,8 +31,7 @@ program
     .option('-d, --date <string>', 'todos of specific day', new Date())
     .option('-7, --recent7', 'show recent 7 days todos')
     .action((option) => {
-        const date = new Date(option.date);
-        const isoDate = toIsoLocalDate(date);
+        const isoDate = toIsoLocalDate(option.date);
         if (option.recent7) {
             listRecentDaysTodos(isoDate, 7);
         } else {
@@ -48,8 +46,7 @@ program
     .description('removing given index from todo list')
     .option('-d, --date <string>', 'todos of specific day', new Date())
     .action((indexes, option) => {
-        const date = new Date(option.date);
-        const isoDate = toIsoLocalDate(date);
+        const isoDate = toIsoLocalDate(option.date);
         removeTodo(indexes, isoDate);
     })
 
@@ -60,8 +57,7 @@ program
     .description('marks given indexes done')
     .option('-d, --date <string>', 'todos of specific day', new Date())
     .action((indexes, option) => {
-        const date = new Date(option.date);
-        const isoDate = toIsoLocalDate(date);
+        const isoDate = toIsoLocalDate(option.date);
         markDone(indexes, isoDate);
     })
 
@@ -72,8 +68,7 @@ program
     .description('marks given indexes undone')
     .option('-d, --date <string>', 'todos of specific day', new Date())
     .action((indexes, option) => {
-        const date = new Date(option.date);
-        const isoDate = toIsoLocalDate(date);
+        const isoDate = toIsoLocalDate(option.date);
         markUndone(indexes, isoDate);
     })
 
@@ -84,8 +79,7 @@ program
     .description('mark given indexes as import and bold you can make it bold several times for more import todos')
     .option('-d, --date <string>', 'todos of specific day', new Date())
     .action((indexes, option) => {
-        const date = new Date(option.date);
-        const isoDate = toIsoLocalDate(date);
+        const isoDate = toIsoLocalDate(option.date);
         markBold(indexes, isoDate);
     })
 
