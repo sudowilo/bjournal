@@ -7,6 +7,7 @@ const { listTodos, listRecentDaysTodos } = require('../commands/list');
 const { insertTodo } = require('../commands/insert');
 const { removeTodo } = require('../commands/remove');
 const { markDone, markUndone, markBold } = require('../commands/mark');
+const { forwardTodo } = require('../commands/forward');
 
 program
     .name('bjournal')
@@ -81,6 +82,27 @@ program
     .action((indexes, option) => {
         const isoDate = toIsoLocalDate(option.date);
         markBold(indexes, isoDate);
+    })
+
+
+program
+    .command('forward')
+    .alias('f')
+    .arguments('<index...>')
+    .description('forwards todo to specific date')
+    .option('-d, --date <string>', 'todos of specific day', new Date())
+    .option('-f, --forward-date <string>', 'date of day to forward  (default: tomorrow)')
+    .action((indexes, option) => {
+        const isoDate = toIsoLocalDate(option.date);
+        if (!option.forwardDate) {
+            const date = new Date();
+            date.setDate(date.getDate() + 1);
+            const isoForwardDate = toIsoLocalDate(date);
+            forwardTodo(indexes, isoDate, isoForwardDate);
+        } else {
+            const isoForwardDate = toIsoLocalDate(option.forwardDate);
+            forwardTodo(indexes, isoDate, isoForwardDate);
+        }
     })
 
 program.parse();

@@ -8,7 +8,11 @@ async function insertTodo(todos, date) {
             data.days[date] = { todo: [] };
             currentDay = data.days[date];
         }
-        for (const todo of todos) {
+        for (let todo of todos) {
+            todo = todo.trim();
+            if (todo[0] === '^') {
+                todo = todo.slice(1);
+            }
             currentDay.todo.push({ text: todo, isDone: false });
         }
         await setData((data));
