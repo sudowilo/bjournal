@@ -8,6 +8,7 @@ const { insertTodo } = require('../commands/insert');
 const { removeTodo } = require('../commands/remove');
 const { markDone, markUndone, markBold } = require('../commands/mark');
 const { forwardTodo } = require('../commands/forward');
+const { listDefaults, insertDefault, removeDefault } = require('../commands/defaultTodos');
 
 program
     .name('bjournal')
@@ -37,7 +38,7 @@ program
     .action((option) => {
         const { date, tomorrow } = option;
         const isoDate = toIsoLocalDate(tomorrow ? tomorrow : date);
-        if (option.recent7 && tomorrow) {
+        if (option.recent7 && !tomorrow) {
             listRecentDaysTodos(isoDate, 7);
         } else {
             listTodos(isoDate);
@@ -111,6 +112,27 @@ program
         const isoForwardDate = toIsoLocalDate(option.forwardDate);
         forwardTodo(indexes, isoDate, isoForwardDate);
 
+    })
+
+program
+    .command('default-todos')
+    .description('default todos added to days todo when you list or insert that day')
+    .option('-l, --list', 'lists all defaults')
+    .option('-i, --insert <string...>', 'inserts new default value')
+    .option('-r, --remove <index...>', 'removes a default from list')
+    .action((option) => {
+        const { list, insert, remove } = option;
+        if ((list && insert) || (list && remove) || (insert && remove)) {
+            console.log('chose only one of options');
+            return;
+        }
+        if (list) {
+            listDefaults();
+        } else if (insert) {
+            insertDefault(insert);
+        } else if (remove) {
+            removeDefault(remove);
+        }
     })
 
 program.parse();

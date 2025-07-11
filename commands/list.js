@@ -1,5 +1,6 @@
 const { toIsoLocalDate } = require('../lib/getDate');
 const { getData, setData } = require('../database/data');
+const { addDefaultTodo } = require('../commands/defaultTodos');
 
 function displayTodos(day) {
     if (!day) {
@@ -15,8 +16,10 @@ function displayTodos(day) {
 async function listTodos(date) {
     try {
         const data = await getData();
+        addDefaultTodo(data, date);
         const day = data.days[date];
         displayTodos(day);
+        await setData(data);
     } catch (error) {
         console.log(error);
         process.exit(0);

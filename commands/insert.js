@@ -1,4 +1,5 @@
 const { getData, setData } = require('../database/data');
+const { addDefaultTodo } = require('../commands/defaultTodos');
 
 async function insertTodo(todos, date) {
     try {
@@ -8,6 +9,7 @@ async function insertTodo(todos, date) {
             data.days[date] = { todo: [] };
             currentDay = data.days[date];
         }
+        addDefaultTodo(data, date);
         for (let todo of todos) {
             todo = todo.trim();
             if (todo[0] === '^') {
