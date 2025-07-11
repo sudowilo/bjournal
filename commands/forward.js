@@ -22,8 +22,8 @@ async function forwardTodo(indexes, date, forwardDate) {
         if (i == indexes[counter]) {
             counter++;
             todos.push(todo.text);
-            if (todo.text[0] !== '^') {
-                todo.text = '^ ' + todo.text;
+            if (!todo.forward) {
+                todo.forward = true;
             }
         }
     }

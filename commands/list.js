@@ -2,12 +2,31 @@ const { toIsoLocalDate } = require('../lib/getDate');
 const { getData, setData } = require('../database/data');
 const { addDefaultTodo } = require('../commands/defaultTodos');
 
+async function sortTodos(day) {
+    const done = [];
+    const undone = [];
+    const forward = [];
+    for (const [index, todo] of day.todo.entries()) {
+        if (todo.isDone) {
+            todo.forward ? forward.push(todo) : done.push(todo);
+        } else {
+            todo.forward ? forward.push(todo) : undone.push(todo);
+        }
+    }
+    const newList = undone.concat(done.concat(forward));
+    day.todo = newList;
+}
+
+
 function displayTodos(day) {
     if (!day) {
         console.log('nothing todo!');
     } else {
+        sortTodos(day);
         for (const [index, todo] of day.todo.entries()) {
-            const mark = todo.isDone ? '🗙' : '●';
+            let mark = todo.isDone ? '🗙' : '●';
+            mark += todo.forward ? ' ^' : '';
+            if (index > 9) mark = '\b'+mark;
             console.log(index, mark, todo.text);
         }
     }
