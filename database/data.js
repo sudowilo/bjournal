@@ -1,5 +1,4 @@
 const fs = require('node:fs').promises;
-const { copyFileSync } = require('node:fs');
 const path = require('node:path');
 
 const dataPath = path.join(__dirname, 'data.json');

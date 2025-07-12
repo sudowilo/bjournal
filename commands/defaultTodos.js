@@ -5,7 +5,7 @@ function initDefaults(data, defaults) {
         data.defaultTodos = {
             todos: [
                 "drink 8 glass of water",
-                "meditate for 10 minutes"
+                "meditate for 2 minutes"
             ],
         }
         console.log('defaults initialized');

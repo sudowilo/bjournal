@@ -9,6 +9,7 @@ const { removeTodo } = require('../commands/remove');
 const { markDone, markUndone, markBold } = require('../commands/mark');
 const { forwardTodo } = require('../commands/forward');
 const { listDefaults, insertDefault, removeDefault } = require('../commands/defaultTodos');
+const { getDataPath, getBackup } = require('../commands/backup');
 
 program
     .name('bjournal')
@@ -132,7 +133,25 @@ program
             insertDefault(insert);
         } else if (remove) {
             removeDefault(remove);
+        } else {
+            console.log('to see options -h');
         }
     })
+
+program
+    .command('backup')
+    .description('get a backup from your data.json file to specific path')
+    .option('--show-path', 'path of data bjournal uses (you can copy your backup here)')
+    .option('--get-backup <path>', 'get a backup from your data to specific path')
+    .action((option)=>{
+        if (option.showPath) {
+            getDataPath();
+        } else if (option.getBackup) {
+            getBackup(option.getBackup);
+        } else {
+            console.log('to see options -h');
+        }
+        
+    });
 
 program.parse();
