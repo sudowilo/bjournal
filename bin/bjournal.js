@@ -104,15 +104,19 @@ program
     .alias('f')
     .arguments('<index...>')
     .description('forwards todo to specific date')
-    .option('-d, --date <string>', 'todos of specific day', new Date())
+    .option('-d, --date <string>', 'todos of specific day')
     .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
-    .option('-f, --forward-date <string>', 'date of day to forward  (default: tomorrow)', getTomorrow())
+    .option('-f, --forward-date <string>', 'date of day to forward (default: tomorrow)', getTomorrow())
     .action((indexes, option) => {
-        const { date, tomorrow } = option;
+        let { date, tomorrow, forwardDate } = option;
+        if (!date) {
+            date = new Date().toLocaleDateString();
+        } else {
+            forwardDate = getTomorrow(date);
+        }
         const isoDate = toIsoLocalDate(tomorrow ? tomorrow : date);
-        const isoForwardDate = toIsoLocalDate(option.forwardDate);
+        const isoForwardDate = toIsoLocalDate(forwardDate);
         forwardTodo(indexes, isoDate, isoForwardDate);
-
     })
 
 program
