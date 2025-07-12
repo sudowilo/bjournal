@@ -89,7 +89,7 @@ program
     .command('bold')
     .alias('b')
     .arguments('<index...>')
-    .description('mark given indexes as import and bold you can make it bold several times for more import todos')
+    .description('mark given indexes as import and bold, you can make it bold several times for more import todos')
     .option('-d, --date <string>', 'todos of specific day', new Date())
     .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
     .action((indexes, option) => {

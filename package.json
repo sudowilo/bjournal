@@ -1,18 +1,26 @@
 {
   "name": "bjournal",
-  "version": "0.0.0",
-  "description": "cli todo and goal pointer",
-  "main": "bin/bjournal.js",
+  "version": "1.0.0",
+  "description": "cli todo and soon goal pointer",
+  "main": "./bin/bjournal.js",
   "type": "commonjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./bin/bjournal.js"
   },
   "bin": {
-    "bjournal": "./bin/bjournal.js"
+    "bjournal": "bin/bjournal.js"
   },
   "author": "wilo",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "commander": "^14.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sudowilo/bjournal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sudowilo/bjournal/issues"
+  },
+  "homepage": "https://github.com/sudowilo/bjournal#readme"
 }
