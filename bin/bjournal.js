@@ -14,7 +14,7 @@ const { getDataPath, getBackup } = require('../commands/backup');
 program
     .name('bjournal')
     .description('cli todo and goal pointer')
-    .version('0.0.0');
+    .version('1.0.4');
 
 program
     .command('insert')
