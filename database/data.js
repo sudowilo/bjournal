@@ -22,10 +22,9 @@ async function getData() {
         }
         return obj;
     } catch (error) {
-        console.log(error);
         if (error.code == 'ENOENT') {
             await fs.writeFile(dataPath, '{"days":{}}');
-            getData();
+            return await getData();
         } else {
             console.log(error.code);
             process.exit(0);
