@@ -35,6 +35,7 @@ function displayTodos(day) {
 async function listTodos(date) {
     try {
         const data = await getData();
+        console.log(date);
         addDefaultTodo(data, date);
         const day = data.days[date];
         displayTodos(day);
