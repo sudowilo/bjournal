@@ -2,7 +2,7 @@
 const { Command } = require('commander');
 const program = new Command();
 
-const { toIsoLocalDate, isoLocalDate, getTomorrow } = require('../lib/getDate');
+const { toIsoLocalDate, isoLocalDate, getTomorrow, getYesterday } = require('../lib/getDate');
 const { listTodos, listRecentDaysTodos } = require('../commands/list');
 const { insertTodo } = require('../commands/insert');
 const { removeTodo } = require('../commands/remove');
@@ -14,8 +14,8 @@ const { getDataPath, getBackup } = require('../commands/backup');
 program
     .name('bjournal')
     .description('cli todo and goal pointer')
-    .version('1.0.4')
-    .
+    .option('-y, --yesterday', 'todos of yesterday use for commands', getYesterday)
+    .version('1.0.4');
 
 program
     .command('insert')
