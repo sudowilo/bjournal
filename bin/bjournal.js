@@ -25,8 +25,14 @@ program
     .option('-d, --date <string>', 'todos of specific day', new Date())
     .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
     .action((str, option) => {
-        const { date, tomorrow } = option;
-        const isoDate = toIsoLocalDate(tomorrow ? tomorrow : date);
+        const {yesterday} = program.opts();
+        const { date, tomorrow} = option;
+        if (tomorrow && yesterday) {
+            console.log('please only choose one date option');
+            return;
+        }
+        const dateOption = yesterday? yesterday: tomorrow;
+        const isoDate = toIsoLocalDate(dateOption ? dateOption : date);
         insertTodo(str, isoDate);
     })
 
@@ -140,13 +146,19 @@ program
     .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
     .option('-f, --forward-date <string>', 'date of day to forward (default: tomorrow)', getTomorrow())
     .action((indexes, option) => {
+        const {yesterday} = program.opts();
         let { date, tomorrow, forwardDate } = option;
+        if (tomorrow && yesterday) {
+            console.log('please only choose one date option');
+            return;
+        }
         if (!date) {
             date = new Date().toLocaleDateString();
         } else {
             forwardDate = getTomorrow(date);
         }
-        const isoDate = toIsoLocalDate(tomorrow ? tomorrow : date);
+        const dateOption = yesterday? yesterday: tomorrow;
+        const isoDate = toIsoLocalDate(dateOption ? dateOption : date);
         const isoForwardDate = toIsoLocalDate(forwardDate);
         forwardTodo(indexes, isoDate, isoForwardDate);
     })
