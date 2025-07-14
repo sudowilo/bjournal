@@ -36,11 +36,18 @@ program
     .description('lists todos (and goals)')
     .option('-d, --date <string>', 'todos of specific day', new Date())
     .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
-    .option('-7, --recent7', 'show recent 7 days todos')
+    .option('-7, --recent7', 'show recent 7 days todos',)
     .action((option) => {
-        const { date, tomorrow } = option;
-        const isoDate = toIsoLocalDate(tomorrow ? tomorrow : date);
-        if (option.recent7 && !tomorrow) {
+        const {yesterday} = program.opts();
+        const { date, tomorrow, recent7 } = option;
+        if (tomorrow && yesterday || tomorrow && recent7 || yesterday && recent7) {
+            console.log('please only choose one date option');
+            return;
+        }
+        const dateOption = yesterday? yesterday: tomorrow;
+        const isoDate = toIsoLocalDate(dateOption ? dateOption : date);
+        
+        if (recent7) {
             listRecentDaysTodos(isoDate, 7);
         } else {
             listTodos(isoDate);
