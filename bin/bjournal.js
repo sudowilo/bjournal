@@ -28,7 +28,7 @@ program
         const { yesterday } = program.opts();
         const { date, tomorrow } = option;
         if (tomorrow && yesterday) {
-            console.log('please only choose one date option');
+            console.log('Only one date option may be selected');
             return;
         }
         const dateOption = yesterday ? yesterday : tomorrow;
@@ -47,7 +47,7 @@ program
         const { yesterday } = program.opts();
         const { date, tomorrow, recent7 } = option;
         if (tomorrow && yesterday || tomorrow && recent7 || yesterday && recent7) {
-            console.log('please only choose one date option');
+            console.log('Only one date option may be selected');
             return;
         }
         const dateOption = yesterday ? yesterday : tomorrow;
@@ -71,7 +71,7 @@ program
         const { yesterday } = program.opts();
         const { date, tomorrow } = option;
         if (tomorrow && yesterday) {
-            console.log('please only choose one date option');
+            console.log('Only one date option may be selected');
             return;
         }
         const dateOption = yesterday ? yesterday : tomorrow;
@@ -90,7 +90,7 @@ program
         const { yesterday } = program.opts();
         const { date, tomorrow } = option;
         if (tomorrow && yesterday) {
-            console.log('please only choose one date option');
+            console.log('Only one date option may be selected');
             return;
         }
         const dateOption = yesterday ? yesterday : tomorrow;
@@ -109,7 +109,7 @@ program
         const { yesterday } = program.opts();
         const { date, tomorrow } = option;
         if (tomorrow && yesterday) {
-            console.log('please only choose one date option');
+            console.log('Only one date option may be selected');
             return;
         }
         const dateOption = yesterday ? yesterday : tomorrow;
@@ -128,7 +128,7 @@ program
         const { yesterday } = program.opts();
         const { date, tomorrow } = option;
         if (tomorrow && yesterday) {
-            console.log('please only choose one date option');
+            console.log('Only one date option may be selected');
             return;
         }
         const dateOption = yesterday ? yesterday : tomorrow;
@@ -149,7 +149,7 @@ program
         const { yesterday } = program.opts();
         let { date, tomorrow, forwardDate } = option;
         if (tomorrow && yesterday) {
-            console.log('please only choose one date option');
+            console.log('Only one date option may be selected');
             return;
         }
         if (!date) {
