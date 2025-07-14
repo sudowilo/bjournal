@@ -62,8 +62,14 @@ program
     .option('-d, --date <string>', 'todos of specific day', new Date())
     .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
     .action((indexes, option) => {
-        const { date, tomorrow } = option;
-        const isoDate = toIsoLocalDate(tomorrow ? tomorrow : date);
+        const {yesterday} = program.opts();
+        const { date, tomorrow} = option;
+        if (tomorrow && yesterday) {
+            console.log('please only choose one date option');
+            return;
+        }
+        const dateOption = yesterday? yesterday: tomorrow;
+        const isoDate = toIsoLocalDate(dateOption ? dateOption : date);
         removeTodo(indexes, isoDate);
     })
 
