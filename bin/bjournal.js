@@ -25,13 +25,13 @@ program
     .option('-d, --date <string>', 'todos of specific day', new Date())
     .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
     .action((str, option) => {
-        const {yesterday} = program.opts();
-        const { date, tomorrow} = option;
+        const { yesterday } = program.opts();
+        const { date, tomorrow } = option;
         if (tomorrow && yesterday) {
             console.log('please only choose one date option');
             return;
         }
-        const dateOption = yesterday? yesterday: tomorrow;
+        const dateOption = yesterday ? yesterday : tomorrow;
         const isoDate = toIsoLocalDate(dateOption ? dateOption : date);
         insertTodo(str, isoDate);
     })
@@ -42,17 +42,17 @@ program
     .description('lists todos (and goals)')
     .option('-d, --date <string>', 'todos of specific day', new Date())
     .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
-    .option('-7, --recent7', 'show recent 7 days todos',)
+    .option('-7, --recent7', 'show recent 7 days todos')
     .action((option) => {
-        const {yesterday} = program.opts();
+        const { yesterday } = program.opts();
         const { date, tomorrow, recent7 } = option;
         if (tomorrow && yesterday || tomorrow && recent7 || yesterday && recent7) {
             console.log('please only choose one date option');
             return;
         }
-        const dateOption = yesterday? yesterday: tomorrow;
+        const dateOption = yesterday ? yesterday : tomorrow;
         const isoDate = toIsoLocalDate(dateOption ? dateOption : date);
-        
+
         if (recent7) {
             listRecentDaysTodos(isoDate, 7);
         } else {
@@ -68,13 +68,13 @@ program
     .option('-d, --date <string>', 'todos of specific day', new Date())
     .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
     .action((indexes, option) => {
-        const {yesterday} = program.opts();
-        const { date, tomorrow} = option;
+        const { yesterday } = program.opts();
+        const { date, tomorrow } = option;
         if (tomorrow && yesterday) {
             console.log('please only choose one date option');
             return;
         }
-        const dateOption = yesterday? yesterday: tomorrow;
+        const dateOption = yesterday ? yesterday : tomorrow;
         const isoDate = toIsoLocalDate(dateOption ? dateOption : date);
         removeTodo(indexes, isoDate);
     })
@@ -87,13 +87,13 @@ program
     .option('-d, --date <string>', 'todos of specific day', new Date())
     .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
     .action((indexes, option) => {
-        const {yesterday} = program.opts();
-        const { date, tomorrow} = option;
+        const { yesterday } = program.opts();
+        const { date, tomorrow } = option;
         if (tomorrow && yesterday) {
             console.log('please only choose one date option');
             return;
         }
-        const dateOption = yesterday? yesterday: tomorrow;
+        const dateOption = yesterday ? yesterday : tomorrow;
         const isoDate = toIsoLocalDate(dateOption ? dateOption : date);
         markDone(indexes, isoDate);
     })
@@ -106,13 +106,13 @@ program
     .option('-d, --date <string>', 'todos of specific day', new Date())
     .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
     .action((indexes, option) => {
-       const {yesterday} = program.opts();
-        const { date, tomorrow} = option;
+        const { yesterday } = program.opts();
+        const { date, tomorrow } = option;
         if (tomorrow && yesterday) {
             console.log('please only choose one date option');
             return;
         }
-        const dateOption = yesterday? yesterday: tomorrow;
+        const dateOption = yesterday ? yesterday : tomorrow;
         const isoDate = toIsoLocalDate(dateOption ? dateOption : date);
         markUndone(indexes, isoDate);
     })
@@ -125,13 +125,13 @@ program
     .option('-d, --date <string>', 'todos of specific day', new Date())
     .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
     .action((indexes, option) => {
-        const {yesterday} = program.opts();
-        const { date, tomorrow} = option;
+        const { yesterday } = program.opts();
+        const { date, tomorrow } = option;
         if (tomorrow && yesterday) {
             console.log('please only choose one date option');
             return;
         }
-        const dateOption = yesterday? yesterday: tomorrow;
+        const dateOption = yesterday ? yesterday : tomorrow;
         const isoDate = toIsoLocalDate(dateOption ? dateOption : date);
         markBold(indexes, isoDate);
     })
@@ -146,7 +146,7 @@ program
     .option('-t, --tomorrow', 'todos of tomorrow', getTomorrow)
     .option('-f, --forward-date <string>', 'date of day to forward (default: tomorrow)', getTomorrow())
     .action((indexes, option) => {
-        const {yesterday} = program.opts();
+        const { yesterday } = program.opts();
         let { date, tomorrow, forwardDate } = option;
         if (tomorrow && yesterday) {
             console.log('please only choose one date option');
@@ -157,7 +157,7 @@ program
         } else {
             forwardDate = getTomorrow(date);
         }
-        const dateOption = yesterday? yesterday: tomorrow;
+        const dateOption = yesterday ? yesterday : tomorrow;
         const isoDate = toIsoLocalDate(dateOption ? dateOption : date);
         const isoForwardDate = toIsoLocalDate(forwardDate);
         forwardTodo(indexes, isoDate, isoForwardDate);
@@ -191,7 +191,7 @@ program
     .description('get a backup from your data.json file to specific path')
     .option('--show-path', 'path of data bjournal uses (you can copy your backup here)')
     .option('--get-backup <path>', 'get a backup from your data to specific path')
-    .action((option)=>{
+    .action((option) => {
         if (option.showPath) {
             getDataPath();
         } else if (option.getBackup) {
@@ -199,7 +199,7 @@ program
         } else {
             console.log('to see options -h');
         }
-        
+
     });
 
 program.parse();
