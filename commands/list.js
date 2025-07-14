@@ -57,6 +57,7 @@ async function listRecentDaysTodos(date, days) {
             const day = data.days[isoDate];
             displayTodos(day);
         }
+        await setData(data);
     } catch (error) {
         console.log(error);
         process.exit(0);
