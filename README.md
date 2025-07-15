@@ -18,6 +18,10 @@ A simple CLI todo and soon goal pointer
 
 Install globally via npm:
 
+⚠️ Version 2.0.0 introduces a new data location (~/.config/bjournal/data.json)
+
+If you're upgrading from v1, your old data won't be auto-migrated.
+
 ```bash
 npm install -g bjournal
 ```

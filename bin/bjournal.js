@@ -15,7 +15,7 @@ program
     .name('bjournal')
     .description('cli todo and goal pointer')
     .option('-y, --yesterday', 'todos of yesterday use for commands', getYesterday)
-    .version('1.1.0');
+    .version('2.0.0');
 
 program
     .command('insert')
