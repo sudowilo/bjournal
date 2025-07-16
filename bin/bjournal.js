@@ -17,7 +17,7 @@ program
     .version('2.0.0')
     .addHelpText(
         'before',
-        '\n\x1b[1mFor more options and usage details, use --help with a specific command.\nExample: bjournal insert --help or -h\x1b[0m\n'
+        '\n\x1b[1mFor more options and usage details, use --help with a specific command.\nExample: bjournal insert --help or -h || bjournal help insert\x1b[0m\n'
     );
 program
     .command('insert')
@@ -183,9 +183,10 @@ program
     .description('Move one or more todos to another day')
     .usage(`
 Examples:
-  bjournal f 1 -f 2025-08-01       # Forward item 1 to a specific date
+  bjournal f 1 -f 2025-08-01       # Forward item 1 from today to a specific date
   bjournal f -t 2                  # Forward item 2 from tomorrow to the next day
   bjournal f 1 2 -f 2025-08-02     # Forward multiple items to a given day
+  bjournal f -d 2025-07-11 -f 2025-08-01 0      #Forwards item form -d to -f 
 `)
     .option('-d, --date <string>', 'Specify the date the todo currently exists on')
     .option('-t, --tomorrow', 'Move todos from tomorrow', getTomorrow)
@@ -243,8 +244,8 @@ program
     .description('Backup or locate your bjournal data file')
     .usage(`
 Examples:
-  bjournal backup --show-path                # Show the path to your data.json
-  bjournal backup --get-backup ./backup.json # Backup your data to a specific path
+  bjournal backup --show-path                     # Show the path to your data.json
+  bjournal backup --get-backup ~/backups/bjournal # Backup your data to a specific path
 `)
     .option('--show-path', 'Show the file path where your data is stored')
     .option('--get-backup <path>', 'Save a backup of your data to a specified path')
