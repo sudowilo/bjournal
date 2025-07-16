@@ -1,104 +1,114 @@
-# bjournal
+# 📒 bjournal
 
-A simple CLI todo and soon goal pointer 
+A simple and fast CLI-based todo tracker — with goal management coming soon.
 
 ---
 
 ## ✨ Features
 
--  Fast and lightweight
--  Handy and easy to use via the terminal
--  Works entirely **locally** — no data is sent anywhere
+* ⚡ **Fast & Lightweight**
+  Designed for terminal lovers who want quick access without clutter.
+
+* 🧠 **Intuitive & Handy**
+  Easy-to-remember commands with helpful aliases (`i` for insert, `rm` for remove, etc.)
+
+* 🔒 **Privacy-First**
+  Runs fully **locally** — no data is sent anywhere.
+
+* 📅 **Date-Based Todo Management**
+  Add, list, remove, and manage todos for today, tomorrow, yesterday, or any specific date.
+
+* ✅ **Mark as Done/Undone**
+  Update your todos’ status using their index numbers.
+
+* 🔥 **Prioritize with Bold**
+  Emphasize important tasks. Mark repeatedly for even higher priority.
+
+* ⏩ **Forward Tasks**
+  Move any todo to another date — great for shifting plans.
+
+* ♻️ **Default (Recurring) Todos**
+  Add habits or recurring tasks that auto-fill into each day.
+
+* 📊 **View Recent History**
+  Use `--last-7` to view todos from the last 7 days.
+
+* 📀 **Backup Support**
+  Backup your data to any file path and locate your local storage with ease.
 
 ---
 
 ## 🚀 Installation
 
-> 🟢 Requires [Node.js](https://nodejs.org/) v14 or newer (npm comes bundled with Node.js)
+> 🟢 Requires [Node.js](https://nodejs.org/) v14 or newer (npm is included)
 
-Install globally via npm:
-
-⚠️ Version 2.0.0 introduces a new data location (~/.config/bjournal/data.json)
-
-If you're upgrading from v1, your old data won't be auto-migrated.
+Install globally via `npm`:
 
 ```bash
 npm install -g bjournal
 ```
 
-Then run it from anywhere:
+> ⚠️ **v2.0.0 Change Notice**
+> Data is now stored at: `~/.config/bjournal/data.json`
+> If you're upgrading from v1, your old data will not be auto-migrated.
+
+Run from anywhere in your terminal:
 
 ```bash
-bjournal [commands]
+bjournal [command] [options]
 ```
 
 ---
 
 ## 📖 Usage
 
-For full usage run:
+To view all available commands:
 
 ```bash
 bjournal --help
 ```
 
-example:
+To see options and examples for a specific command:
+
+```bash
+bjournal help insert
+bjournal help list
+# ...and so on
 ```
-Usage: bjournal [options] [command]
-
-cli todo and goal pointer
-
-Options:
-  -V, --version                   output the version number
-  -h, --help                      display help for command
-
-Commands:
-  insert|i [options] <string...>  inserting todo to specific date
-  list|l [options]                lists todos (and goals)
-  remove|rm [options] <index...>  removing given index from todo list
-  done|d [options] <index...>     marks given indexes done
-  undone|u [options] <index...>   marks given indexes undone
-  bold|b [options] <index...>     mark given indexes as import and bold
-  forward|f [options] <index...>  forwards todo to specific date
-  default-todos [options]         default todos for adding to day by default
-  backup [options]                get a backup from your data
-  help [command]                  display help for command
-
-```
-
 
 ---
+
 ## 🔐 Legal & Disclaimer
 
 > ⚠️ **Use at your own risk.**
 
-This software **does not collect, transmit, or store** any personal or project data externally.  
-All operations are performed **locally on your machine**.
+* This tool does **not collect or transmit** your data externally.
+* All operations happen **locally** on your device.
 
-I am **not responsible for any data loss, damage, or unintended behavior** resulting from the use of this CLI.  
-Please ensure you have backups and understand the commands before running them.
+The developer (me) is **not responsible** for data loss, corruption, or unintended behavior.
+Please **back up your data** and use with care.
 
 By using this tool, you agree that:
-- You are solely responsible for how it’s used
-- No liability shall be held against the developer (me) for lost data or damage
 
-> 🔒 > The terms described in this section apply retroactively to all existing content in this repository, including earlier commits and published versions, and prospectively to all future updates.
+* You take full responsibility for its use
+* No liability is held against the developer
 
+> 🔒 These terms apply retroactively to all previous versions, and forward to all future updates.
 
 ---
 
 ## 🛠️ Development
 
-Clone the repo:
+Clone and set up locally:
 
 ```bash
 git clone https://github.com/sudowilo/bjournal.git
 cd bjournal
 npm install
-npm link  # Makes the CLI available globally for testing
+npm link  # Symlink to test the CLI globally
 ```
 
-Now you can test it:
+Now you can run it like so:
 
 ```bash
 bjournal
@@ -108,5 +118,5 @@ bjournal
 
 ## 📄 License
 
-MIT © sudowilo
-See [`LICENSE`](./LICENSE) for more info.
+MIT © [sudowilo](https://github.com/sudowilo)
+See [`LICENSE`](./LICENSE) for more information.
