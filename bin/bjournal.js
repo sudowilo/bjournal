@@ -51,6 +51,14 @@ program
     .command('list')
     .alias('l')
     .description('lists todos (and goals)')
+    .usage(`
+Examples:
+  bjournal list                  # List today's todos
+  bjournal list -t              # List tomorrow's todos
+  bjournal list -y              # List yesterday's todos
+  bjournal list -d 2025-08-01   # List todos of a specific date
+  bjournal list -7              # Show todos from the last 7 days
+`)
     .option('-d, --date <string>', 'sets date to specific day', isoLocalDate())
     .option('-t, --tomorrow', 'sets date to tomorrow', getTomorrow)
     .option('-y, --yesterday', 'sets date to yesterday', getYesterday)
@@ -77,6 +85,12 @@ program
     .arguments('<index...>')
     .description('removing given index from todo list')
     .option('-d, --date <string>', 'sets date to specific day', isoLocalDate())
+    .usage(`
+Examples:
+  bjournal rm 1 2               # Remove items 1 and 2 from today's list
+  bjournal rm -t 3              # Remove item 3 from tomorrow's list
+  bjournal rm -d 2025-08-01 1   # Remove item 1 from a specific date
+`)
     .option('-t, --tomorrow', 'sets date to tomorrow', getTomorrow)
     .option('-y, --yesterday', 'sets date to yesterday', getYesterday)
     .action((indexes, option) => {
@@ -95,6 +109,12 @@ program
     .alias('d')
     .arguments('<index...>')
     .description('marks given indexes done')
+    .usage(`
+Examples:
+  bjournal done 1 3             # Mark items 1 and 3 as done for today
+  bjournal done -y 2            # Mark item 2 as done for yesterday
+  bjournal done -d 2025-08-01 1 # Mark item 1 as done for a specific date
+`)
     .option('-d, --date <string>', 'sets date to specific day', isoLocalDate())
     .option('-t, --tomorrow', 'sets date to tomorrow', getTomorrow)
     .option('-y, --yesterday', 'sets date to yesterday', getYesterday)
@@ -114,6 +134,11 @@ program
     .alias('u')
     .arguments('<index...>')
     .description('marks given indexes undone')
+    .usage(`
+Examples:
+  bjournal undone 1 2           # Mark items 1 and 2 as undone
+  bjournal undone -t 3          # Mark item 3 as undone for tomorrow
+`)
     .option('-d, --date <string>', 'sets date to specific day', isoLocalDate())
     .option('-t, --tomorrow', 'sets date to tomorrow', getTomorrow)
     .option('-y, --yesterday', 'sets date to yesterday', getYesterday)
@@ -133,6 +158,12 @@ program
     .alias('b')
     .arguments('<index...>')
     .description('mark given indexes as import and bold, you can make it bold several times for more import todos')
+    .usage(`
+Examples:
+  bjournal bold 1               # Mark item 1 as important (bold)
+  bjournal bold 1 2             # Bold multiple items
+  bjournal bold -y 2            # Bold an item from yesterday
+`)
     .option('-d, --date <string>', 'sets date to specific day', isoLocalDate())
     .option('-t, --tomorrow', 'sets date to tomorrow', getTomorrow)
     .option('-y, --yesterday', 'sets date to yesterday', getYesterday)
@@ -153,6 +184,12 @@ program
     .alias('f')
     .arguments('<index...>')
     .description('forwards todo to specific date')
+    .usage(`
+Examples:
+  bjournal f 1 -f 2025-08-01       # Forward item 1 to a specific date
+  bjournal f -t 2                  # Forward item 2 from tomorrow to the next day
+  bjournal f 1 2 -f 2025-08-02     # Forward multiple items to a given day
+`)
     .option('-d, --date <string>', 'sets date to specific day')
     .option('-t, --tomorrow', 'sets date to tomorrow', getTomorrow)
     .option('-y, --yesterday', 'sets date to yesterday', getYesterday)
@@ -177,6 +214,12 @@ program
 program
     .command('default-todos')
     .description('default todos added to days todo when you list or insert that day')
+    .usage(`
+Examples:
+  bjournal default-todos -l             # List all default todos
+  bjournal default-todos -i 'Drink water' 'Review goals'  # Add default items
+  bjournal default-todos -r 1           # Remove a default item by index
+`)
     .option('-l, --list', 'lists all defaults')
     .option('-i, --insert <string...>', 'inserts new default value')
     .option('-r, --remove <index...>', 'removes a default from list')
@@ -200,6 +243,11 @@ program
 program
     .command('backup')
     .description('get a backup from your data.json file to specific path')
+    .usage(`
+Examples:
+  bjournal backup --show-path                # Show the path to your data.json
+  bjournal backup --get-backup ./backup.json # Backup your data to a specific path
+`)
     .option('--show-path', 'path of data bjournal uses (you can copy your backup here)')
     .option('--get-backup <path>', 'get a backup from your data to specific path')
     .action((option) => {
