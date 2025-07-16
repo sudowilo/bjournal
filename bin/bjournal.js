@@ -19,13 +19,11 @@ program
         'before',
         '\n\x1b[1mFor more options and usage details, use --help with a specific command.\nExample: bjournal insert --help or -h\x1b[0m\n'
     );
-
-
 program
     .command('insert')
     .alias('i')
     .arguments('<string...>')
-    .description('inserting todo')
+    .description('Add one or more todos to a specific day (default: today)')
     .usage(`
 Examples:
   bjournal i 'Go to the gym'                  # Add a todo for today
@@ -33,9 +31,9 @@ Examples:
   bjournal i -t 'Go to the bank in the morning'   # Add a todo for tomorrow
   bjournal i -d 2025-08-01 'Pay the bills'        # Add a todo for a specific date
 `)
-    .option('-d, --date <string>', 'sets date to specific day', isoLocalDate())
-    .option('-t, --tomorrow', 'sets date to tomorrow', getTomorrow)
-    .option('-y, --yesterday', 'sets date to yesterday', getYesterday)
+    .option('-d, --date <string>', 'Specify a custom date (e.g., 2025-08-01)', isoLocalDate())
+    .option('-t, --tomorrow', 'Add todos to tomorrow', getTomorrow)
+    .option('-y, --yesterday', 'Add todos to yesterday', getYesterday)
     .action((str, option) => {
         const { date, tomorrow, yesterday } = option;
         if (tomorrow && yesterday) {
@@ -45,12 +43,12 @@ Examples:
         const dateOption = yesterday ? yesterday : tomorrow;
         const isoDate = toIsoLocalDate(dateOption ? dateOption : date);
         insertTodo(str, isoDate);
-    })
+    });
 
 program
     .command('list')
     .alias('l')
-    .description('lists todos (and goals)')
+    .description('View todos for a specific day or a recent range (default: today)')
     .usage(`
 Examples:
   bjournal list                  # List today's todos
@@ -59,10 +57,10 @@ Examples:
   bjournal list -d 2025-08-01   # List todos of a specific date
   bjournal list -7              # Show todos from the last 7 days
 `)
-    .option('-d, --date <string>', 'sets date to specific day', isoLocalDate())
-    .option('-t, --tomorrow', 'sets date to tomorrow', getTomorrow)
-    .option('-y, --yesterday', 'sets date to yesterday', getYesterday)
-    .option('-7, --recent7', 'show recent 7 days todos')
+    .option('-d, --date <string>', 'Specify a custom date (e.g., 2025-08-01)', isoLocalDate())
+    .option('-t, --tomorrow', 'View todos from tomorrow', getTomorrow)
+    .option('-y, --yesterday', 'View todos from yesterday', getYesterday)
+    .option('-7, --last-7', 'Show todos from the past 7 days (including today)')
     .action((option) => {
         const { date, tomorrow, yesterday, recent7 } = option;
         if (tomorrow && yesterday || tomorrow && recent7 || yesterday && recent7) {
@@ -77,22 +75,22 @@ Examples:
         } else {
             listTodos(isoDate);
         }
-    })
+    });
 
 program
     .command('remove')
     .alias('rm')
     .arguments('<index...>')
-    .description('removing given index from todo list')
-    .option('-d, --date <string>', 'sets date to specific day', isoLocalDate())
+    .description('Remove one or more todos by their index for a specific day')
     .usage(`
 Examples:
   bjournal rm 1 2               # Remove items 1 and 2 from today's list
   bjournal rm -t 3              # Remove item 3 from tomorrow's list
   bjournal rm -d 2025-08-01 1   # Remove item 1 from a specific date
 `)
-    .option('-t, --tomorrow', 'sets date to tomorrow', getTomorrow)
-    .option('-y, --yesterday', 'sets date to yesterday', getYesterday)
+    .option('-d, --date <string>', 'Specify a custom date (e.g., 2025-08-01)', isoLocalDate())
+    .option('-t, --tomorrow', 'Remove from tomorrow', getTomorrow)
+    .option('-y, --yesterday', 'Remove from yesterday', getYesterday)
     .action((indexes, option) => {
         const { date, tomorrow, yesterday } = option;
         if (tomorrow && yesterday) {
@@ -102,22 +100,22 @@ Examples:
         const dateOption = yesterday ? yesterday : tomorrow;
         const isoDate = toIsoLocalDate(dateOption ? dateOption : date);
         removeTodo(indexes, isoDate);
-    })
+    });
 
 program
     .command('done')
     .alias('d')
     .arguments('<index...>')
-    .description('marks given indexes done')
+    .description('Mark one or more todos as done for a specific day')
     .usage(`
 Examples:
   bjournal done 1 3             # Mark items 1 and 3 as done for today
   bjournal done -y 2            # Mark item 2 as done for yesterday
   bjournal done -d 2025-08-01 1 # Mark item 1 as done for a specific date
 `)
-    .option('-d, --date <string>', 'sets date to specific day', isoLocalDate())
-    .option('-t, --tomorrow', 'sets date to tomorrow', getTomorrow)
-    .option('-y, --yesterday', 'sets date to yesterday', getYesterday)
+    .option('-d, --date <string>', 'Specify a custom date (e.g., 2025-08-01)', isoLocalDate())
+    .option('-t, --tomorrow', 'Mark todos from tomorrow', getTomorrow)
+    .option('-y, --yesterday', 'Mark todos from yesterday', getYesterday)
     .action((indexes, option) => {
         const { date, tomorrow, yesterday } = option;
         if (tomorrow && yesterday) {
@@ -127,21 +125,21 @@ Examples:
         const dateOption = yesterday ? yesterday : tomorrow;
         const isoDate = toIsoLocalDate(dateOption ? dateOption : date);
         markDone(indexes, isoDate);
-    })
+    });
 
 program
     .command('undone')
     .alias('u')
     .arguments('<index...>')
-    .description('marks given indexes undone')
+    .description('Mark one or more todos as not done for a specific day')
     .usage(`
 Examples:
   bjournal undone 1 2           # Mark items 1 and 2 as undone
   bjournal undone -t 3          # Mark item 3 as undone for tomorrow
 `)
-    .option('-d, --date <string>', 'sets date to specific day', isoLocalDate())
-    .option('-t, --tomorrow', 'sets date to tomorrow', getTomorrow)
-    .option('-y, --yesterday', 'sets date to yesterday', getYesterday)
+    .option('-d, --date <string>', 'Specify a custom date (e.g., 2025-08-01)', isoLocalDate())
+    .option('-t, --tomorrow', 'Mark todos from tomorrow', getTomorrow)
+    .option('-y, --yesterday', 'Mark todos from yesterday', getYesterday)
     .action((indexes, option) => {
         const { date, tomorrow, yesterday } = option;
         if (tomorrow && yesterday) {
@@ -151,22 +149,22 @@ Examples:
         const dateOption = yesterday ? yesterday : tomorrow;
         const isoDate = toIsoLocalDate(dateOption ? dateOption : date);
         markUndone(indexes, isoDate);
-    })
+    });
 
 program
     .command('bold')
     .alias('b')
     .arguments('<index...>')
-    .description('mark given indexes as import and bold, you can make it bold several times for more import todos')
+    .description('Mark one or more todos as important (bold); marking multiple times increases emphasis')
     .usage(`
 Examples:
   bjournal bold 1               # Mark item 1 as important (bold)
   bjournal bold 1 2             # Bold multiple items
   bjournal bold -y 2            # Bold an item from yesterday
 `)
-    .option('-d, --date <string>', 'sets date to specific day', isoLocalDate())
-    .option('-t, --tomorrow', 'sets date to tomorrow', getTomorrow)
-    .option('-y, --yesterday', 'sets date to yesterday', getYesterday)
+    .option('-d, --date <string>', 'Specify a custom date (e.g., 2025-08-01)', isoLocalDate())
+    .option('-t, --tomorrow', 'Bold todos from tomorrow', getTomorrow)
+    .option('-y, --yesterday', 'Bold todos from yesterday', getYesterday)
     .action((indexes, option) => {
         const { date, tomorrow, yesterday } = option;
         if (tomorrow && yesterday) {
@@ -176,53 +174,53 @@ Examples:
         const dateOption = yesterday ? yesterday : tomorrow;
         const isoDate = toIsoLocalDate(dateOption ? dateOption : date);
         markBold(indexes, isoDate);
-    })
-
+    });
 
 program
     .command('forward')
     .alias('f')
     .arguments('<index...>')
-    .description('forwards todo to specific date')
+    .description('Move one or more todos to another day')
     .usage(`
 Examples:
   bjournal f 1 -f 2025-08-01       # Forward item 1 to a specific date
   bjournal f -t 2                  # Forward item 2 from tomorrow to the next day
   bjournal f 1 2 -f 2025-08-02     # Forward multiple items to a given day
 `)
-    .option('-d, --date <string>', 'sets date to specific day')
-    .option('-t, --tomorrow', 'sets date to tomorrow', getTomorrow)
-    .option('-y, --yesterday', 'sets date to yesterday', getYesterday)
-    .option('-f, --forward-date <string>', 'date of day to forward (default: tomorrow)', getTomorrow())
+    .option('-d, --date <string>', 'Specify the date the todo currently exists on')
+    .option('-t, --tomorrow', 'Move todos from tomorrow', getTomorrow)
+    .option('-y, --yesterday', 'Move todos from yesterday', getYesterday)
+    .option('-f, --forward-date <string>', 'Target date to forward the todo(s) to (default: tomorrow)', getTomorrow())
     .action((indexes, option) => {
         let { date, tomorrow, yesterday, forwardDate } = option;
         if (tomorrow && yesterday) {
             console.log('Only one date option may be selected');
             return;
         }
+        if (!forwardDate) {
+            forwardDate = getTomorrow(date);
+        }
         if (!date) {
             date = new Date().toLocaleDateString();
-        } else {
-            forwardDate = getTomorrow(date);
         }
         const dateOption = yesterday ? yesterday : tomorrow;
         const isoDate = toIsoLocalDate(dateOption ? dateOption : date);
         const isoForwardDate = toIsoLocalDate(forwardDate);
         forwardTodo(indexes, isoDate, isoForwardDate);
-    })
+    });
 
 program
     .command('default-todos')
-    .description('default todos added to days todo when you list or insert that day')
+    .description('Manage default todos that are automatically added when inserting or listing a day')
     .usage(`
 Examples:
   bjournal default-todos -l             # List all default todos
   bjournal default-todos -i 'Drink water' 'Review goals'  # Add default items
   bjournal default-todos -r 1           # Remove a default item by index
 `)
-    .option('-l, --list', 'lists all defaults')
-    .option('-i, --insert <string...>', 'inserts new default value')
-    .option('-r, --remove <index...>', 'removes a default from list')
+    .option('-l, --list', 'List all default todos')
+    .option('-i, --insert <string...>', 'Add one or more default todos')
+    .option('-r, --remove <index...>', 'Remove default todos by index')
     .action((option) => {
         const { list, insert, remove } = option;
         if ((list && insert) || (list && remove) || (insert && remove)) {
@@ -238,18 +236,18 @@ Examples:
         } else {
             console.log('to see options -h');
         }
-    })
+    });
 
 program
     .command('backup')
-    .description('get a backup from your data.json file to specific path')
+    .description('Backup or locate your bjournal data file')
     .usage(`
 Examples:
   bjournal backup --show-path                # Show the path to your data.json
   bjournal backup --get-backup ./backup.json # Backup your data to a specific path
 `)
-    .option('--show-path', 'path of data bjournal uses (you can copy your backup here)')
-    .option('--get-backup <path>', 'get a backup from your data to specific path')
+    .option('--show-path', 'Show the file path where your data is stored')
+    .option('--get-backup <path>', 'Save a backup of your data to a specified path')
     .action((option) => {
         if (option.showPath) {
             getDataPath();
@@ -258,7 +256,7 @@ Examples:
         } else {
             console.log('to see options -h');
         }
-
     });
+
 
 program.parse();
