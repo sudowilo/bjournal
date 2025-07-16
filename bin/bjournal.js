@@ -191,20 +191,20 @@ Examples:
     .option('-d, --date <string>', 'Specify the date the todo currently exists on')
     .option('-t, --tomorrow', 'Move todos from tomorrow', getTomorrow)
     .option('-y, --yesterday', 'Move todos from yesterday', getYesterday)
-    .option('-f, --forward-date <string>', 'Target date to forward the todo(s) to (default: tomorrow)', getTomorrow())
+    .option('-f, --forward-date <string>', 'Target date to forward the todo(s) to (default: tomorrow)', getTomorrow)
     .action((indexes, option) => {
         let { date, tomorrow, yesterday, forwardDate } = option;
         if (tomorrow && yesterday) {
             console.log('Only one date option may be selected');
             return;
         }
-        if (!forwardDate) {
-            forwardDate = getTomorrow(date);
-        }
+        const dateOption = yesterday ? yesterday : tomorrow;
         if (!date) {
             date = new Date().toLocaleDateString();
         }
-        const dateOption = yesterday ? yesterday : tomorrow;
+        if (!forwardDate) {
+            forwardDate = getTomorrow(dateOption ? dateOption : date);
+        }
         const isoDate = toIsoLocalDate(dateOption ? dateOption : date);
         const isoForwardDate = toIsoLocalDate(forwardDate);
         forwardTodo(indexes, isoDate, isoForwardDate);
