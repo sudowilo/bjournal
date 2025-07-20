@@ -62,15 +62,15 @@ Examples:
     .option('-y, --yesterday', 'View todos from yesterday', getYesterday)
     .option('-7, --last-7', 'Show todos from the past 7 days (including today)')
     .action((option) => {
-        const { date, tomorrow, yesterday, recent7 } = option;
-        if (tomorrow && yesterday || tomorrow && recent7 || yesterday && recent7) {
+        const { date, tomorrow, yesterday, last7 } = option;
+        if (tomorrow && yesterday || tomorrow && last7 || yesterday && last7) {
             console.log('Only one date option may be selected');
             return;
         }
         const dateOption = yesterday ? yesterday : tomorrow;
         const isoDate = toIsoLocalDate(dateOption ? dateOption : date);
 
-        if (recent7) {
+        if (last7) {
             listRecentDaysTodos(isoDate, 7);
         } else {
             listTodos(isoDate);
