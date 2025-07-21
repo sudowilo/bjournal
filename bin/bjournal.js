@@ -24,7 +24,7 @@ const { getDataPath, getBackup } = require("../commands/backup");
 program
   .name("bjournal")
   .description("cli todo and soon goal pointer")
-  .version("2.0.3")
+  .version("2.0.4")
   .addHelpText(
     "before",
     "\n\x1b[1mFor more options and usage details, use --help with a specific command.\nExample: bjournal insert --help or -h || bjournal help insert\x1b[0m\n"
