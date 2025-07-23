@@ -1,6 +1,6 @@
 {
   "name": "bjournal",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "cli todo and soon goal pointer",
   "main": "./bin/bjournal.js",
   "type": "commonjs",
