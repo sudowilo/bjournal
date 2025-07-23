@@ -252,8 +252,7 @@ Examples:
   .option("-y, --yesterday", "Move todos from yesterday", getYesterday)
   .option(
     "-f, --forward-date <string>",
-    "Target date to forward the todo(s) to (default: tomorrow)",
-    getTomorrow
+    "Target date to forward the todo(s) to (default: tomorrow)"
   )
   .action((indexes, option) => {
     let { date, tomorrow, yesterday, forwardDate } = option;
@@ -263,7 +262,7 @@ Examples:
     }
     const dateOption = yesterday ? yesterday : tomorrow;
     if (!date) {
-      date = new Date().toLocaleDateString();
+      date = new Date();
     }
     if (!forwardDate) {
       forwardDate = getTomorrow(dateOption ? dateOption : date);
